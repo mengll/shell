@@ -1,0 +1,33 @@
+#!/bin/sh
+#author mengll
+#version 0.1
+#desc 安装python3.6版本
+
+#安装路径
+installDir=/usr/local/python3
+pName=Python-3.6.2.tgz
+#获取
+if [ ! -f $pName ];then
+   wget -c https://www.python.org/ftp/python/3.6.2/Python-3.6.2.tgz
+fi
+
+if [ $? -eq 0 ];then
+        tar -zxvf $pName
+        if [ $? -eq 0 ];then
+            #解压
+            cd Python-3.6.2
+            ./configure --prefix=/usr/local/python3
+            make && make install
+           #安装当
+           if [ $? -eq 0 ];then
+                $installDir/bin/pip3.6 install pymysql xlrd
+                if [ $? -eq 0 ];then
+                        echo -e "\E[32m 安装成功 \E[0m"
+                fi
+            else
+                echo -e "\E[31m 安装失败 \E[0m"
+           fi
+        fi
+fi
+
+
