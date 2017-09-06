@@ -4,10 +4,16 @@
 #desc 安装python3.6版本
 
 #安装路径
+yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gcc make
+if [ $? -ne 0 ];then
+  exit 1
+fi
+
 installDir=/usr/local/python3
 pName=Python-3.6.2.tgz
+cd /usr/local/src
 #获取
-if [ ! -f $pName ];then
+if [ ! -e $pName ];then
    wget -c https://www.python.org/ftp/python/3.6.2/Python-3.6.2.tgz
 fi
 
@@ -29,5 +35,24 @@ if [ $? -eq 0 ];then
            fi
         fi
 fi
+
+echo "start config!"
+
+ln -s /usr/local/python3/bin/python3.6 /usr/bin/python3
+
+if [ $? -ne 0 ];then
+   echo "python link create error!"
+ else
+    echo -e "\E[32m 安装成功 \E[0m"
+fi
+
+ln -s /usr/local/python3/bin/pip3 /usr/bin/pip3
+
+if [ $? -ne 0 ];then
+   echo "\E[31m安装失败\E[0m"
+ else
+   echo -e "\E[32m 安装成功 \E[0m"
+fi
+
 
 
